@@ -1,0 +1,1 @@
+web: java $JAVA_OPTS -jar -Dserver.port=$PORT com-nails-api/target/com-nails-api-spring-boot.jar
