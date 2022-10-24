@@ -18,6 +18,8 @@ public class ProductCriteria {
     private Integer status;
     private Integer quantity;
     private Long parentId;
+    private Long price1;
+    private Long price2;
 
     public Specification<Product> getSpecification() {
         return new Specification<>() {
@@ -50,6 +52,10 @@ public class ProductCriteria {
                 if(getCategoryId() != null) {
                     Join<Product, Category> joinCategory = root.join("category", JoinType.INNER);
                     predicates.add(cb.equal(joinCategory.get("id"), getCategoryId()));
+                }
+
+                if (getPrice1() != null && getPrice2() != null) {
+                    predicates.add(cb.between(root.get("price"), getPrice1(), getPrice2()));
                 }
 
                 if(getQuantity() != null) {
