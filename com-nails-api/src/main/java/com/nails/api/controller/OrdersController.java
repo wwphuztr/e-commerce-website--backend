@@ -204,6 +204,23 @@ public class OrdersController extends ABasicController{
         }
     }
 
+    private void setPurchaseCountForOrderDetailList(List<OrdersDetail> ordersDetailList) {
+        for (int i = 0;  i < ordersDetailList.size(); i++) {
+            OrdersDetail ordersDetail = ordersDetailList.get(i);
+            Product product = productRepository.findById(ordersDetail.getProduct().getId()).orElse(null);
+            if(product == null) {
+                throw new RequestException(ErrorCode.ORDERS_ERROR_NOT_FOUND_PRODUCT);
+            }
+            int new_purchase_count = ordersDetail.getAmount();
+            int old_purchase_count = product.getPurchaseCount();
+            new_purchase_count = old_purchase_count + new_purchase_count;
+
+            product.setPurchaseCount(new_purchase_count);
+            productRepository.save(product);
+        }
+    }
+
+
     private Customer createNewCustomerIfPhoneNotOwned(String phone, String email, String fullName, String address) {
         Customer customer = customerRepository.findByAccountPhone(phone);
 
@@ -289,6 +306,7 @@ public class OrdersController extends ABasicController{
         Orders orders = ordersMapper.fromCreateOrdersClientFormToEntity(createOrdersClientForm);
 
         setPriceListForOrderDetailList(ordersDetailList);
+        setPurchaseCountForOrderDetailList(ordersDetailList);
 
         orders.setCustomer(customer);
 
@@ -471,6 +489,7 @@ public class OrdersController extends ABasicController{
         List<OrdersDetail> ordersDetailList = ordersDetailMapper.fromCreateOrdersDetailAdminFormListToEntityList(createOrdersDetailFormList);
         Orders orders = ordersMapper.fromCreateOrdersClientFormToEntity(createOrdersClientForm);
         setPriceListForOrderDetailList(ordersDetailList);
+        setPurchaseCountForOrderDetailList(ordersDetailList);
 
         Customer customer = customerRepository.findByAccountPhone(createOrdersClientForm.getReceiverPhone());
         if(customer == null) {
