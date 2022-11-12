@@ -25,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
@@ -96,7 +97,20 @@ public class ProductController extends ABasicController{
         return responseListObjApiMessageDto;
     }
 
+    @GetMapping(value = "/client-list-topsales", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ApiMessageDto<ResponseListObj<ProductAdminDto>> clientlist_topsales(ProductCriteria productCriteria, Pageable pageable){
+        ApiMessageDto<ResponseListObj<ProductAdminDto>> responseListObjApiMessageDto = new ApiMessageDto<>();
 
+        //List<Product> list = productRepository.topsales(pageable);
+        List<Product> list = productRepository.findByOrderByPurchaseCountDesc(pageable);
+
+        ResponseListObj<ProductAdminDto> responseListObj = new ResponseListObj<>();
+        responseListObj.setData(productMapper.fromEntityListToProductDtoListclient(list));
+
+        responseListObjApiMessageDto.setData(responseListObj);
+        responseListObjApiMessageDto.setMessage(GET_LIST_SUCCESS_MESSAGE);
+        return responseListObjApiMessageDto;
+    }
 
     @GetMapping(value ="/products-by-category", produces = MediaType.APPLICATION_JSON_VALUE)
     public ApiMessageDto<ResponseListObj<ProductsByCategoryDto>> productsByCategory(CategoryCriteria categoryCriteria, Pageable pageable) {
@@ -200,7 +214,10 @@ public class ProductController extends ABasicController{
                 productRepository.save(parentProduct);
             }
         }
+        // set cái purchase count lúc nào được tạo ra cũng bằng 0
+        product.setPurchaseCount(0);
         productRepository.save(product);
+
         result.setMessage("Create product success");
         return result;
     }

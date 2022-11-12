@@ -23,6 +23,8 @@ public class Product extends  Auditable<String> {
     private Long price;
     private String image;
 
+    private Integer purchaseCount;
+
     @Column(name = "content", columnDefinition = "TEXT", length=10485760)
     private String description;
 
@@ -44,9 +46,6 @@ public class Product extends  Auditable<String> {
 
     @Column(name = "label_color")
     private String labelColor = "#ffffff00";
-
-    @Column(name = "Quantity_InStock")
-    private Integer quantity;
 
     @Min(0)
     @Max(100)

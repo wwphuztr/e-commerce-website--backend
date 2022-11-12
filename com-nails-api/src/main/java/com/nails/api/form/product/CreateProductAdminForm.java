@@ -45,6 +45,6 @@ public class CreateProductAdminForm {
     @ApiModelProperty(name = "saleoff")
     private Integer saleoff;
 
-    @ApiModelProperty(name = "quantity")
-    private Integer quantity;
+//    @ApiModelProperty(name = "quantity")
+//    private Integer quantity;
 }

@@ -77,6 +77,8 @@ public class MyIntercepter implements HandlerInterceptor {
         String requestUri = request.getRequestURI();
         String[] uriByPassAuth = qrJwt.getPemission().split(",");
 
+        log.info("pass qua step nay");
+
         return Arrays.stream(uriByPassAuth).anyMatch(requestUri::contains);
     }
     /**

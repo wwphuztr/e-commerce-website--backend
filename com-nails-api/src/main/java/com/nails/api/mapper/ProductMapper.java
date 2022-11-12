@@ -21,7 +21,7 @@ public interface ProductMapper {
     @Mapping(source = "categoryId", target = "category.id")
     @Mapping(source = "labelColor", target = "labelColor")
     @Mapping(source = "saleoff", target = "saleoff")
-    @Mapping(source = "quantity", target = "quantity")
+    //@Mapping(source = "quantity", target = "quantity")
     @BeanMapping(ignoreByDefault = true)
     @Named("adminCreateMapping")
     Product fromCreateProductAdminFormToEntity( CreateProductAdminForm createProductAdminForm );
@@ -35,7 +35,7 @@ public interface ProductMapper {
     @Mapping(source = "categoryId", target = "category.id")
     @Mapping(source = "labelColor", target = "labelColor")
     @Mapping(source = "saleoff", target = "saleoff")
-    @Mapping(source = "quantity", target = "quantity")
+    //@Mapping(source = "quantity", target = "quantity")
     @BeanMapping(ignoreByDefault = true)
     @Named("adminUpdateMapping")
     void fromUpdateProductAdminFormToEntity(UpdateProductAdminForm updateProductAdminForm, @MappingTarget Product product);
@@ -55,7 +55,7 @@ public interface ProductMapper {
     @Mapping(source = "labelColor", target = "labelColor")
     @Mapping(source = "saleoff", target = "saleoff")
     @Mapping(source = "parentProduct.id", target = "parentId")
-    @Mapping(source = "quantity", target = "quantity")
+    //@Mapping(source = "quantity", target = "quantity")
     @BeanMapping(ignoreByDefault = true)
     @Named("adminGetMapping")
     ProductAdminDto fromEntityToAdminDto(Product product);
@@ -75,7 +75,7 @@ public interface ProductMapper {
     @Mapping(source = "labelColor", target = "labelColor")
     @Mapping(source = "saleoff", target = "saleoff")
     @Mapping(source = "parentProduct.id", target = "parentId")
-    @Mapping(source = "quantity", target = "quantity")
+    //@Mapping(source = "quantity", target = "quantity")
     @BeanMapping(ignoreByDefault = true)
     @Named("adminClientGetMapping")
     ProductAdminDto fromEntityToAdminDtoforClient(Product product);
